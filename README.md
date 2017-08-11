@@ -20,4 +20,4 @@ List the names of the channels you wish to download inside `targets`, one per li
 
 ## License
 
-No idea yet, use as if CC-BY-NC-SA
+No idea yet, use as if [CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0)
