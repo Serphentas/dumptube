@@ -1,0 +1,5 @@
+dumps/
+targets
+*.pyc
+*.egg-info
+venv/
