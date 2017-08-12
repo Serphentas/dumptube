@@ -50,6 +50,6 @@ for target in targets:
                 print(bcolors.OKBLUE + "Video already downloaded, skipping" + bcolors.ENDC)
                 print("")
     else:
-        print(bcolors.WARNING + "More than one channel has been found with the keyword '" + channel + "'" + bcolors.ENDC)
-        print(bcolors.WARNING + "Please only enter exact channel names" + bcolors.ENDC)
+        warn("More than one channel has been found with the keyword '" + channel + "'")
+        warn("Please only enter exact channel names")
 
