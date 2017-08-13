@@ -18,6 +18,10 @@ List the names of the channels you wish to download inside `targets`, one per li
     youlost
     thegame
 
+## Contributing
+
+See [here](CONTRIBUTING.md)
+
 ## License
 
 No idea yet, use as if [CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0)
