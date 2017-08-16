@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from apiclient.discovery import build
 from oauth2client.tools import argparser
-import os
+import os, datetime
 from video import Video
 from channel import Channel
 
@@ -14,14 +14,16 @@ yt = build(
     developerKey=os.environ.get('YT_API_KEY')
 )
 
-def get_videos(channel_id):
+def get_videos(channel_id, date):
   # Call the search.list method to retrieve results matching the specified
   # query term.
   search_response = yt.search().list(
     channelId=channel_id,
     part="id,snippet",
     order="date",
-    maxResults=50
+    maxResults=50,
+    publishedBefore=date,
+    publishedAfter=datetime.datetime.strptime('2000-01-01T00:00:00.0', '%Y-%m-%dT%H:%M:%S.%f').isoformat('T') + 'Z'
   ).execute()
 
   videos = []

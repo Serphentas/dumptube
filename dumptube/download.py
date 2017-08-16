@@ -23,9 +23,16 @@ for target in targets:
 
     if len(channels) == 1:
         channel = channels[0]
-        info("Processing channel '" + channel.username + "'")
+        info("Processing channel '" + target + "'")
 
-        videos = get_videos(channel.id)
+        videos = get_videos(channel.id, datetime.datetime.now().isoformat('T') + 'Z')
+        if len(videos) < 50:
+            done = False
+            while not done:
+              new_videos = get_videos(channel.id, videos[len(videos)-1].date)
+              done = len(new_videos) < 50
+              videos = videos + new_videos
+              print len(videos)
         dump_folder = os.getcwd() + '/dumps/' + target
         chk_path(dump_folder)
 
