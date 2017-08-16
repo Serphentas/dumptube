@@ -16,6 +16,8 @@ for target in targets:
     print(bcolors.OKBLUE + " * " + target + bcolors.ENDC)
 
 # gettings channel content iteratively
+vid_ctr = 0
+vid_size = 0
 for target in targets:
     channels = find_channel(target)
 
@@ -40,16 +42,23 @@ for target in targets:
                 sys.stdout.flush()
 
                 dl = yt.get(vid_ext, vid_res)
+                filename = dump_folder + '/' + video.title + "-" + video.id + '.' + vid_ext
                 dl.download(dump_folder)
 
                 # renaming video file to original title and appending YouTube id
-                os.rename(dump_folder + '/' + dl.filename + '.' + vid_ext,dump_folder + '/' + video.title + "-" + video.id + '.' + vid_ext)
+                os.rename(dump_folder + '/' + dl.filename + '.' + vid_ext,filename)
+                vid_ctr += 1
+                vid_size += os.path.getsize(filename)
                 print(bcolors.OKGREEN + "done" + bcolors.ENDC)
                 print("")
             else:
                 print(bcolors.OKBLUE + "Video already downloaded, skipping" + bcolors.ENDC)
                 print("")
+        info("Finished downloading videos from '" + target + "'")
     else:
         warn("More than one channel has been found with the keyword '" + channel + "'")
         warn("Please only enter exact channel names")
+info("Dump completed")
+info("Total videos downloaded: " + str(vid_ctr))
+info("Total download size: " + str(vid_size) + " bytes")
 
