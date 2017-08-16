@@ -30,12 +30,13 @@ def get_videos(channel_id):
   # matching videos, channels, and playlists.
   for search_result in search_response.get("items", []):
     if search_result["id"]["kind"] == "youtube#video":
-      videos.append(Video(
-        search_result["id"]["videoId"],
-        search_result["snippet"]["title"],
-        search_result["snippet"]["description"],
-        search_result["snippet"]["publishedAt"]
-      ))
+      if search_result["snippet"]["liveBroadcastContent"] != "upcoming":
+        videos.append(Video(
+          search_result["id"]["videoId"],
+          search_result["snippet"]["title"],
+          search_result["snippet"]["description"],
+          search_result["snippet"]["publishedAt"]
+        ))
 
   return videos
 
