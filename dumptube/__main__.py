@@ -22,9 +22,6 @@ def main():
     # greeting user
     print(bcolors.HEADER + __title__ + " " + __version__ + bcolors.ENDC)
 
-    # creating dump folder if not existing
-    chk_path(os.getcwd() + '/dumps')
-
     # checking if target channels and YouTube API key are provided
     if not chk_targets():
         fail("No target file exists, please check the README for more information")
