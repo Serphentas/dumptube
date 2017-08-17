@@ -16,6 +16,6 @@ def get_feed(xml_filename):
     return ET.parse(xml_filename).getroot()
 
 def chk_path(dir_path):
-    dumps_path = os.path.abspath(os.getcwd() + dir_path)
+    dumps_path = os.path.abspath(dir_path)
     if not os.path.exists(dumps_path):
         os.makedirs(dumps_path)

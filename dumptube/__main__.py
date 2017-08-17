@@ -13,7 +13,7 @@ def main():
     print(bcolors.HEADER + __title__ + " " + __version__ + bcolors.ENDC)
 
     # creating dump folder if not existing
-    chk_path('/dumps')
+    chk_path(os.getcwd() + '/dumps')
 
     # checking if target channels and YouTube API key are provided
     if not chk_targets():
