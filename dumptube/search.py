@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from apiclient.discovery import build
 from oauth2client.tools import argparser
-import os, datetime
+import os
+import datetime as dt
 from video import Video
 from channel import Channel
 
@@ -23,7 +24,7 @@ def get_videos(channel_id, date):
         order="date",
         maxResults=50,
         publishedBefore=date,
-        publishedAfter=datetime.datetime.strptime('2000-01-01T00:00:00.0', '%Y-%m-%dT%H:%M:%S.%f').isoformat('T') + 'Z'
+        publishedAfter=dt.datetime.strptime('2000-01-01T00:00:00.0', '%Y-%m-%dT%H:%M:%S.%f').isoformat('T') + 'Z'
     ).execute()
 
     videos = []
@@ -37,7 +38,7 @@ def get_videos(channel_id, date):
                     search_result["id"]["videoId"],
                     search_result["snippet"]["title"],
                     search_result["snippet"]["description"],
-                    search_result["snippet"]["publishedAt"]
+                    dt.datetime.strptime(search_result["snippet"]["publishedAt"][:-1], '%Y-%m-%dT%H:%M:%S.%f')
                 ))
 
     return videos
@@ -55,6 +56,7 @@ def find_channel(channel_name):
         if search_result["id"]["kind"] == "youtube#channel":
             channels.append(Channel(
                 search_result["id"]["channelId"],
+                channel_name,
                 search_result["snippet"]["title"]
             ))
 

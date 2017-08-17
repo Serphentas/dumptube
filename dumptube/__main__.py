@@ -5,6 +5,8 @@ from messaging import fail
 import os
 import argparse
 from download import download
+from database import init_db
+from query import show_db
 
 __title__ = 'dumptube'
 __version__ = '1.0.0'
@@ -17,7 +19,16 @@ def main():
         dest='dumpdir',
         help='Path to download directory'
     )
+    parser.add_argument(
+        '--show',
+        '-s',
+        action='store_true',
+        help='Show database contents'
+    )
     args = parser.parse_args()
+
+    # preparing the ORM
+    init_db()
 
     # greeting user
     print(bcolors.HEADER + __title__ + " " + __version__ + bcolors.ENDC)
@@ -27,8 +38,10 @@ def main():
         fail("No target file exists, please check the README for more information")
     elif not os.environ.get('YT_API_KEY'):
         fail("No YouTube API key has been set, please check the README for more information")
-    else:
+    elif not args.show:
         download(args)
+    else:
+        show_db()
 
 if __name__ == '__main__':
     main()

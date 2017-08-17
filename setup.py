@@ -8,5 +8,6 @@ setup(
     install_requires=[
         'pytube',
         'google-api-python-client',
+        'sqlalchemy',
     ]
 )
