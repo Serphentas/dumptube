@@ -2,10 +2,13 @@
 
 This tool will download all videos of the given YouTube channels using the best possible quality for each video.
 
+It also stores metadata from both channels and videos inside a local database with parent-children relationships.
+
 ## Requirements
 
 * pytube
 * google-api-python-client
+* sqlalchemy
 
 ## Usage
 
@@ -24,6 +27,14 @@ Then, install and run:
     . venv/bin/activate
     pip install .
     python dumptube
+
+By default, videos are stored in `/dumps`. You may specify the directory in which videos should be saved using the `-d` keyword:
+
+    python dumptube -d /tmp
+
+You can also see what has been stored in the database (`db.sqlite`) like so:
+
+    python dumptube -s
 
 ## Contributing
 
