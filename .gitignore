@@ -3,3 +3,4 @@ targets
 *.pyc
 *.egg-info
 venv/
+db.sqlite
