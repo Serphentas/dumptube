@@ -26,13 +26,13 @@ for target in targets:
         info("Processing channel '" + target + "'")
 
         videos = get_videos(channel.id, datetime.datetime.now().isoformat('T') + 'Z')
-        if len(videos) < 50:
-            done = False
-            while not done:
-              new_videos = get_videos(channel.id, videos[len(videos)-1].date)
-              done = len(new_videos) < 50
-              videos = videos + new_videos
-              print len(videos)
+        done = False
+        while not done:
+            new_videos = get_videos(channel.id, videos[len(videos)-1].date)
+            done = len(new_videos) == 1 and videos[len(videos)-1].id == new_videos[0].id
+            if not done:
+                videos = videos + new_videos[1:49]
+
         dump_folder = os.getcwd() + '/dumps/' + target
         chk_path(dump_folder)
 
