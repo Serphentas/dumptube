@@ -18,6 +18,13 @@ List the names of the channels you wish to download inside `targets`, one per li
     youlost
     thegame
 
+Then, install and run:
+
+    pyvenv venv
+    . venv/bin/activate
+    pip install .
+    python dumptube
+
 ## Contributing
 
 See [here](CONTRIBUTING.md)
