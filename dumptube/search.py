@@ -32,7 +32,7 @@ def get_videos(channel_id, date):
     # matching videos, channels, and playlists.
     for search_result in search_response.get("items", []):
         if search_result["id"]["kind"] == "youtube#video":
-            if search_result["snippet"]["liveBroadcastContent"] != "upcoming":
+            if search_result["snippet"]["liveBroadcastContent"] not in ["upcoming", "live"]:
                 videos.append(Video(
                     search_result["id"]["videoId"],
                     search_result["snippet"]["title"],
