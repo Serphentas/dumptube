@@ -38,7 +38,7 @@ def get_videos(channel_id, date):
                     search_result["snippet"]["title"],
                     search_result["snippet"]["description"],
                     search_result["snippet"]["publishedAt"]
-              ))
+                ))
 
     return videos
 
