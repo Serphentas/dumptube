@@ -10,62 +10,70 @@ from colors import bcolors
 from fileutils import print_targets, chk_path
 from search import find_channel, get_videos
 
-info("The following target channels have been found:")
-targets = print_targets()
-for target in targets:
-    print(bcolors.OKBLUE + " * " + target + bcolors.ENDC)
-
-# gettings channel content iteratively
-vid_ctr = 0
-vid_size = 0
-for target in targets:
-    channels = find_channel(target)
-
-    if len(channels) == 1:
-        channel = channels[0]
-        info("Processing channel '" + target + "'")
-
-        videos = get_videos(channel.id, datetime.datetime.now().isoformat('T') + 'Z')
-        done = False
-        while not done:
-            new_videos = get_videos(channel.id, videos[len(videos)-1].date)
-            done = len(new_videos) == 1 and videos[len(videos)-1].id == new_videos[0].id
-            if not done:
-                videos = videos + new_videos[1:49]
-
-        dump_folder = os.getcwd() + '/dumps/' + target
-        chk_path(dump_folder)
-
-        # saving videos
-        for video in videos:
-            info("Processing video '" + video.title + "'")
-            yt = YouTube("https://www.youtube.com/watch?v=" + video.id)
-            vid_ext = yt.videos[len(yt.videos)-1].extension
-            vid_res = yt.videos[len(yt.videos)-1].resolution
-
-            # checking if video file already exists
-            if not os.path.isfile(dump_folder + "/" + video.title + "-" + video.id + '.' + vid_ext):
-                sys.stdout.write(bcolors.OKBLUE + "Video not downloaded yet, please wait... ")
-                sys.stdout.flush()
-
-                dl = yt.get(vid_ext, vid_res)
-                filename = dump_folder + '/' + video.title + "-" + video.id + '.' + vid_ext
-                dl.download(dump_folder)
-
-                # renaming video file to original title and appending YouTube id
-                os.rename(dump_folder + '/' + dl.filename + '.' + vid_ext, filename)
-                vid_ctr += 1
-                vid_size += os.path.getsize(filename)
-                print(bcolors.OKGREEN + "done" + bcolors.ENDC)
-                print("")
-            else:
-                print(bcolors.OKBLUE + "Video already downloaded, skipping" + bcolors.ENDC)
-                print("")
-        info("Finished downloading videos from '" + target + "'")
+def download(args):
+    # setting the appropriate path for dumps
+    if not args.dumpdir:
+        dump_root = os.getcwd() + '/dumps/'
     else:
-        warn("More than one channel has been found with the keyword '" + channel + "'")
-        warn("Please only enter exact channel names")
-info("Dump completed")
-info("Total videos downloaded: " + str(vid_ctr))
-info("Total download size: " + str(vid_size) + " bytes")
+        dump_root = args.dumpdir if args.dumpdir.endswith('\/') else args.dumpdir + '/'
+    chk_path(dump_root)
+
+    info("The following target channels have been found:")
+    targets = print_targets()
+    for target in targets:
+        print(bcolors.OKBLUE + " * " + target + bcolors.ENDC)
+
+    # gettings channel content iteratively
+    vid_ctr = 0
+    vid_size = 0
+    for target in targets:
+        channels = find_channel(target)
+
+        if len(channels) == 1:
+            channel = channels[0]
+            info("Processing channel '" + target + "'")
+
+            videos = get_videos(channel.id, datetime.datetime.now().isoformat('T') + 'Z')
+            done = False
+            while not done:
+                new_videos = get_videos(channel.id, videos[len(videos)-1].date)
+                done = len(new_videos) == 1 and videos[len(videos)-1].id == new_videos[0].id
+                if not done:
+                    videos = videos + new_videos[1:49]
+
+            dump_folder = dump_root + target
+            chk_path(dump_folder)
+
+            # saving videos
+            for video in videos:
+                info("Processing video '" + video.title + "'")
+                yt = YouTube("https://www.youtube.com/watch?v=" + video.id)
+                vid_ext = yt.videos[len(yt.videos)-1].extension
+                vid_res = yt.videos[len(yt.videos)-1].resolution
+
+                # checking if video file already exists
+                if not os.path.isfile(dump_folder + "/" + video.title + "-" + video.id + '.' + vid_ext):
+                    sys.stdout.write(bcolors.OKBLUE + "Video not downloaded yet, please wait... ")
+                    sys.stdout.flush()
+
+                    dl = yt.get(vid_ext, vid_res)
+                    filename = dump_folder + '/' + video.title + "-" + video.id + '.' + vid_ext
+                    dl.download(dump_folder)
+
+                    # renaming video file to original title and appending YouTube id
+                    os.rename(dump_folder + '/' + dl.filename + '.' + vid_ext, filename)
+                    vid_ctr += 1
+                    vid_size += os.path.getsize(filename)
+                    print(bcolors.OKGREEN + "done" + bcolors.ENDC)
+                    print("")
+                else:
+                    print(bcolors.OKBLUE + "Video already downloaded, skipping" + bcolors.ENDC)
+                    print("")
+            info("Finished downloading videos from '" + target + "'")
+        else:
+            warn("More than one channel has been found with the keyword '" + channel + "'")
+            warn("Please only enter exact channel names")
+    info("Dump completed")
+    info("Total videos downloaded: " + str(vid_ctr))
+    info("Total download size: " + str(vid_size) + " bytes")
 
