@@ -53,7 +53,7 @@ for target in targets:
                 dl.download(dump_folder)
 
                 # renaming video file to original title and appending YouTube id
-                os.rename(dump_folder + '/' + dl.filename + '.' + vid_ext,filename)
+                os.rename(dump_folder + '/' + dl.filename + '.' + vid_ext, filename)
                 vid_ctr += 1
                 vid_size += os.path.getsize(filename)
                 print(bcolors.OKGREEN + "done" + bcolors.ENDC)
