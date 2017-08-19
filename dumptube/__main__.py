@@ -40,8 +40,9 @@ def main():
             fail("No target file exists, please check the README for more information")
         elif not os.environ.get('YT_API_KEY'):
             fail("No YouTube API key has been set, please check the README for more information")
-        setup()
-        download(args)
+        else:
+            setup()
+            download(args)
     else:
         show_db()
 
