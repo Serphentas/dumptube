@@ -6,14 +6,17 @@ import datetime as dt
 from video import Video
 from channel import Channel
 
-# creating YouTube API object
-YT_API_SERVICE_NAME = "youtube"
-YT_API_VERSION = "v3"
-yt = build(
-    YT_API_SERVICE_NAME,
-    YT_API_VERSION,
-    developerKey=os.environ.get('YT_API_KEY')
-)
+def setup():
+    """
+    Creating YouTube API object
+    """
+    YT_API_SERVICE_NAME = "youtube"
+    YT_API_VERSION = "v3"
+    yt = build(
+        YT_API_SERVICE_NAME,
+        YT_API_VERSION,
+        developerKey=os.environ.get('YT_API_KEY')
+    )
 
 def get_videos(channel_id, date):
     # Call the search.list method to retrieve results matching the specified
