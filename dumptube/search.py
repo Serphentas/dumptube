@@ -10,9 +10,10 @@ def setup():
     """
     Creating YouTube API object
     """
+    global __yt
     YT_API_SERVICE_NAME = "youtube"
     YT_API_VERSION = "v3"
-    yt = build(
+    __yt = build(
         YT_API_SERVICE_NAME,
         YT_API_VERSION,
         developerKey=os.environ.get('YT_API_KEY')
@@ -21,7 +22,8 @@ def setup():
 def get_videos(channel_id, date):
     # Call the search.list method to retrieve results matching the specified
     # query term.
-    search_response = yt.search().list(
+    global __yt
+    search_response = __yt.search().list(
         channelId=channel_id,
         part="id,snippet",
         order="date",
@@ -39,7 +41,7 @@ def get_videos(channel_id, date):
             if search_result["snippet"]["liveBroadcastContent"] not in ["upcoming", "live"]:
                 videos.append(Video(
                     search_result["id"]["videoId"],
-                    search_result["snippet"]["title"],
+                    unicode(search_result["snippet"]["title"]),
                     search_result["snippet"]["description"],
                     dt.datetime.strptime(search_result["snippet"]["publishedAt"][:-1], '%Y-%m-%dT%H:%M:%S.%f')
                 ))
@@ -47,7 +49,8 @@ def get_videos(channel_id, date):
     return videos
 
 def find_channel(channel_name):
-    search_response = yt.search().list(
+    global __yt
+    search_response = __yt.search().list(
         q=channel_name,
         part="id,snippet",
         maxResults=50
