@@ -6,6 +6,7 @@ It also stores metadata from both channels and videos inside a local database wi
 
 ## Requirements
 
+* python 3
 * pytube
 * google-api-python-client
 * sqlalchemy
