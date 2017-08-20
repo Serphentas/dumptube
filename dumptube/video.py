@@ -28,3 +28,4 @@ class Video(Base):
 
     def __repr__(self):
         return "<Video('%s', '%s', '%s')>" % (self.ytid, self.title, self.date)
+

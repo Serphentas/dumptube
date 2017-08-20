@@ -41,7 +41,7 @@ def get_videos(channel_id, date):
             if search_result["snippet"]["liveBroadcastContent"] not in ["upcoming", "live"]:
                 videos.append(Video(
                     search_result["id"]["videoId"],
-                    unicode(search_result["snippet"]["title"]),
+                    search_result["snippet"]["title"],
                     search_result["snippet"]["description"],
                     dt.datetime.strptime(search_result["snippet"]["publishedAt"][:-1], '%Y-%m-%dT%H:%M:%S.%f')
                 ))

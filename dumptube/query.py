@@ -11,11 +11,11 @@ def show_db():
     for channel in channels:
         sys.stdout.write("* Channel " + str(channel.id) + " ")
         sys.stdout.flush()
-        print unicode(channel)
+        print(channel)
         videos = channel.videos
-        
+
         for video in videos:
             sys.stdout.write("   * Video " + str(video.id) + " ")
             sys.stdout.flush()
-            print unicode(video)
+            print(video)
 
