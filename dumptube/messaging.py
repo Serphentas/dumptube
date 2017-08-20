@@ -8,3 +8,4 @@ def fail(msg):
 
 def info(msg):
     print(bcolors.OKBLUE + "[INFO] " + msg + bcolors.ENDC)
+
