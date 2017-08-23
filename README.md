@@ -24,9 +24,9 @@ List the names of the channels you wish to download inside `targets`, one per li
 
 Then, install and run:
 
-    pyvenv venv
+    python3 -m venv venv
     . venv/bin/activate
-    pip install .
+    pip install --upgrade .
     python dumptube
 
 By default, videos are stored in `/dumps`. You may specify the directory in which videos should be saved using the `-d` keyword:
