@@ -12,6 +12,7 @@ from fileutils import print_targets, chk_path
 from search import find_channel, get_videos
 from database import session
 from collections import OrderedDict
+import re
 
 def download(args):
     # setting the appropriate path for dumps
@@ -94,14 +95,17 @@ def download(args):
                             vid_ext = next(iter(v))
                         break
 
+                # using safe filename
+                title = re.sub("/", "", video.title)
+
                 # checking if video file already exists
-                if not os.path.isfile(dump_folder + "/" + video.title + "-" + video.ytid + '.' + vid_ext):
+                if not os.path.isfile(dump_folder + "/" + title + "-" + video.ytid + '.' + vid_ext):
                     sys.stdout.write(bcolors.OKBLUE + "Video not downloaded yet, please wait... ")
                     sys.stdout.flush()
 
                     # downloading video
                     dl = yt.get(vid_ext, vid_res)
-                    filename = dump_folder + '/' + video.title + "-" + video.ytid + '.' + vid_ext
+                    filename = dump_folder + '/' + title + "-" + video.ytid + '.' + vid_ext
                     dl.download(dump_folder)
 
                     # updating the database
