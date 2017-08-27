@@ -78,7 +78,6 @@ def download(args):
                     query = session.query(Video).filter_by(ytid=video.ytid).first()
                     if query is None:
                         channel.videos.append(video)
-                        session.add(video)
                         session.add(channel)
                         session.commit()
 
