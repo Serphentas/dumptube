@@ -51,6 +51,7 @@ def download(args):
                 done = len(new_videos) == 1 and videos[len(videos)-1].ytid == new_videos[0].ytid
                 if not done:
                     videos = videos + new_videos[1:49]
+            info("Found " + str(len(videos)) + " videos")
 
             # setting path for this channel's dump folder
             dump_folder = dump_root + target
