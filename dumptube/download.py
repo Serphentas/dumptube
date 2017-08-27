@@ -11,6 +11,7 @@ from colors import bcolors
 from fileutils import print_targets, chk_path
 from search import find_channel, get_videos
 from database import session
+from collections import OrderedDict
 
 def download(args):
     # setting the appropriate path for dumps
@@ -61,8 +62,37 @@ def download(args):
             for video in videos:
                 info("Processing video '" + video.title + "'")
                 yt = YouTube("https://www.youtube.com/watch?v=" + video.ytid)
-                vid_ext = yt.videos[len(yt.videos)-1].extension
-                vid_res = yt.videos[len(yt.videos)-1].resolution
+
+                # finding best quality
+                # creating an ordered dict for easier search
+                types = OrderedDict()
+                types['4320p'] = {}
+                types['2160p'] = {}
+                types['1440p'] = {}
+                types['1080p'] = {}
+                types['720p'] = {}
+                types['480p'] = {}
+                types['360p'] = {}
+                types['240p'] = {}
+                types['144p'] = {}
+
+                # populating dict
+                for vid in yt._videos:
+                    types[vid.resolution][vid.extension] = vid
+
+                # selecting first available video, sorted by descending resolution
+                for k, v in types.items():
+                    if v:
+                        vid_res = k
+
+                        # selecting lightest formats first
+                        if 'webm' in v:
+                            vid_ext = 'webm'
+                        if 'mp4' in v:
+                            vid_ext = 'mp4'
+                        else:
+                            vid_ext = next(iter(v))
+                        break
 
                 # checking if video file already exists
                 if not os.path.isfile(dump_folder + "/" + video.title + "-" + video.ytid + '.' + vid_ext):
