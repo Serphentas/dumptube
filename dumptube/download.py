@@ -95,7 +95,7 @@ def download(args):
                     print("")
             info("Finished downloading videos from '" + target + "'")
         else:
-            warn("More than one channel has been found with the keyword '" + channel + "'")
+            warn("More than one channel has been found with the keyword '" + target + "'")
             warn("Please only enter exact channel names")
     info("Dump completed")
     info("Total videos downloaded: " + str(vid_ctr))
