@@ -61,7 +61,7 @@ def download(args):
 
             # saving videos
             for video in videos:
-                info("Processing video '" + video.title + "'")
+                info("Processing video " + str(vid_ctr+1) + '/' + str(len(videos)) + " '" + video.title + "'")
                 yt = YouTube("https://www.youtube.com/watch?v=" + video.ytid)
 
                 # finding best quality
