@@ -104,7 +104,7 @@ def download(args):
 
                 # checking if video file already exists
                 if not os.path.isfile(dump_folder + "/" + title + "-" + video.ytid + '.' + vid_ext):
-                    sys.stdout.write(bcolors.OKBLUE + "Video not downloaded yet, please wait... ")
+                    sys.stdout.write(bcolors.OKBLUE + "Not downloaded yet, please wait... ")
                     sys.stdout.flush()
 
                     # downloading video
@@ -129,7 +129,7 @@ def download(args):
                     print(bcolors.OKGREEN + "done" + bcolors.ENDC)
                     print("")
                 else:
-                    print(bcolors.OKBLUE + "Video already downloaded, skipping" + bcolors.ENDC)
+                    print(bcolors.OKBLUE + "Already downloaded, skipping" + bcolors.ENDC)
                     print("")
             info("Finished downloading videos from '" + target + "'")
         else:
